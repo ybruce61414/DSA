@@ -20,8 +20,19 @@ class MaxBinaryHeap {
 
     this.size -= 1;
     this._trickleDown();
-
     return max;
+  }
+
+  heapify(arr) {
+    if (!Array.isArray(arr)) return;
+    let lastParentIndex = Math.floor((arr.length - 2) / 2);
+    this.values = arr;
+    this.size = arr.length;
+
+    for (let i = lastParentIndex; i >= 0; i--) {
+      this._trickleDown(i);
+    }
+    return this.values;
   }
 
   _bubbleUp() {
@@ -36,8 +47,8 @@ class MaxBinaryHeap {
     }
   }
 
-  _trickleDown() {
-    let currIdx = 0;
+  _trickleDown(start = 0) {
+    let currIdx = start;
     let leftChildIdx, rightChildIdx, swapIdx;
 
     while (true) {
@@ -73,11 +84,12 @@ class MaxBinaryHeap {
   }
 }
 
-let maxheap = new MaxBinaryHeap();
+let maxHeap = new MaxBinaryHeap();
 
 const array = [17, 2, 36, 100, 7, 1, 19, 25, 3];
-for (let i of array) maxheap.insert(i);
+for (let i of array) maxHeap.insert(i);
+// maxHeap.heapify(array);
 
-console.log(maxheap.values);
-maxheap.extractMax();
-console.log(maxheap.values);
+console.log(maxHeap.values);
+maxHeap.extractMax();
+console.log(maxHeap.values);
