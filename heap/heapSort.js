@@ -18,18 +18,19 @@ class MaxBinaryHeap {
     this._swap(0, this.values.length - 1);
 
     let max = this.values.pop();
-
     this.size -= 1;
+
     this._trickleDown();
     return max;
   }
 
   heapify(arr) {
-    //  to-do
     if (!Array.isArray(arr)) return;
-    let lastParentIndex = Math.floor((arr.length - 2) / 2);
-    this.values = arr;
-    this.size = arr.length;
+    //  need copy new one otherwise change original array
+    let copyArr = Array.from(arr);
+    let lastParentIndex = Math.floor((copyArr.length - 2) / 2);
+    this.values = copyArr;
+    this.size = copyArr.length;
 
     for (let i = lastParentIndex; i >= 0; i--) {
       this._trickleDown(i);
@@ -94,8 +95,11 @@ const heapSort = (arr) => {
     maxHeap.insert(arr[i]);
   }
 
+  // maxHeap.heapify(arr);
+
   for (let i = 0; i < arr.length; i++) {
-    sorted.push(maxHeap.extractMax());
+    let ex = maxHeap.extractMax()
+    sorted.push(ex);
   }
   return sorted;
 };
