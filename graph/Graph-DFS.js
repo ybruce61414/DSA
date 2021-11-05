@@ -42,13 +42,37 @@ class Graph {
     const result = [];
     const visited = {};
     const adjacencyList = this.adjacencyList;
-    (function (vertex) {
-      if (!vertex) return null;
+
+    (function dfs(vertex) {
       visited[vertex] = true;
       result.push(vertex);
-      //  to-do
-      console.log("---", adjacencyList[vertex]);
+      adjacencyList[vertex].forEach((neighbor) => {
+        if (!visited[neighbor]) return dfs(neighbor);
+      });
     })(start);
+    return result;
+  }
+
+  depthFirstIterative(start) {
+    const stack = [start];
+    const result = [];
+    const visited = {};
+    visited[start] = true;
+    let curr;
+
+    while (stack.length > 0) {
+      console.log("--stack", stack);
+      curr = stack.pop();
+      result.push(curr);
+
+      this.adjacencyList[curr].forEach((neighbor) => {
+        if (!visited[neighbor]) {
+          visited[neighbor] = true;
+          stack.push(neighbor);
+        }
+      });
+      return result;
+    }
   }
 
   show() {
@@ -74,6 +98,7 @@ g.addEdge("E", "F");
 
 console.log("--show", g.show());
 console.log(g.depthFirstRecursive("A"));
+console.log(g.depthFirstIterative("A"));
 
 //     A
 //   /    \
@@ -84,3 +109,4 @@ console.log(g.depthFirstRecursive("A"));
 //     F
 
 // [A B D E C F]
+// [A C E F D B]
