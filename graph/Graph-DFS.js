@@ -61,7 +61,6 @@ class Graph {
     let curr;
 
     while (stack.length > 0) {
-      console.log("--stack", stack);
       curr = stack.pop();
       result.push(curr);
 
