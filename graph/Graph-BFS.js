@@ -91,5 +91,4 @@ console.log("bfs:", g.breadthFirstIterative("A"));
 //  \     /
 //     F
 
-// [A B D E C F]
-// [A C E F D B]
+// [A B C D E F]

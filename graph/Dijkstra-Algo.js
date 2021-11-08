@@ -16,6 +16,10 @@ class PriorityQuene {
     return this.values.length === 0;
   }
 
+  show() {
+    return this.values;
+  }
+
   sort() {
     this.values.sort((a, b) => a.priority - b.priority);
   }
@@ -40,11 +44,10 @@ class WeightedGraph {
     this.adjacencyList[vt2].push({ node: vt1, weight });
   }
 
-  dijkstra(start, finish) {
+  dijkstra(start) {
     const pq = new PriorityQuene();
     const distances = {};
     const prevNodes = {};
-    const path = [];
 
     //  set initial state
     Object.keys(this.adjacencyList).forEach((vertex) => {
@@ -53,38 +56,28 @@ class WeightedGraph {
         pq.enquene(vertex, 0);
       } else {
         distances[vertex] = Infinity;
-        pq.enquene(vertex, Infinity);
       }
       prevNodes[vertex] = null;
     });
 
     while (!pq.isEmpty()) {
       let minNode = pq.dequene().val;
-      if (minNode === finish) {
-        while (prevNodes[minNode]) {
-          path.push(minNode);
-          minNode = prevNodes[minNode];
-        }
-        break;
-      }
+      console.log("--de", minNode);
 
-      if (minNode || distances[minNode] !== Infinity) {
-        for (let neighbor in this.adjacencyList[minNode]) {
-          //  find neighbor node
-          let neighborNode = this.adjacencyList[minNode][neighbor];
-          console.log("--neighborNode-", neighborNode);
-          let candidate = distances[minNode] + neighborNode.weight;
+      for (let neighbor of this.adjacencyList[minNode]) {
+        let neighborNode = neighbor.node;
+        let newDistance = distances[minNode] + neighbor.weight;
 
-          if (candidate < distances[neighborNode.node]) {
-            distances[neighborNode.node] = candidate;
-            prevNodes[neighborNode.node] = minNode;
-            pq.enquene(neighborNode.node, candidate);
-          }
+        if (newDistance < distances[neighborNode]) {
+          distances[neighborNode] = newDistance;
+          prevNodes[neighborNode] = minNode;
+
+          console.log("-enquene-", neighborNode, newDistance);
+          pq.enquene(neighborNode, newDistance);
         }
       }
-      console.log("---path", path.concat(minNode).reverse());
-      return distances;
     }
+    return { distances, prevNodes };
   }
 }
 
@@ -104,4 +97,4 @@ testGraph.addEdge("C", "F", 4);
 testGraph.addEdge("D", "F", 1);
 testGraph.addEdge("E", "F", 1);
 
-console.log("dis===", testGraph.dijkstra("A", "E"));
+console.log("result:", testGraph.dijkstra("A", "E"));
