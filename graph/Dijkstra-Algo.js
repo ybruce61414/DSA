@@ -1,14 +1,15 @@
-class PriorityQuene {
+class PriorityQueue {
+  //  naive version
   constructor() {
     this.values = [];
   }
 
-  enquene(val, priority) {
+  enqueue(val, priority) {
     this.values.push({ val, priority });
     this.sort();
   }
 
-  dequene() {
+  dequeue() {
     return this.values.shift();
   }
 
@@ -45,7 +46,7 @@ class WeightedGraph {
   }
 
   dijkstra(start) {
-    const pq = new PriorityQuene();
+    const pq = new PriorityQueue();
     const distances = {};
     const prevNodes = {};
 
@@ -61,7 +62,7 @@ class WeightedGraph {
     });
 
     while (!pq.isEmpty()) {
-      let minNode = pq.dequene().val;
+      let minNode = pq.dequeue().val;
       console.log("--de", minNode);
 
       for (let neighbor of this.adjacencyList[minNode]) {
@@ -72,8 +73,8 @@ class WeightedGraph {
           distances[neighborNode] = newDistance;
           prevNodes[neighborNode] = minNode;
 
-          console.log("-enquene-", neighborNode, newDistance);
-          pq.enquene(neighborNode, newDistance);
+          console.log("-enqueue-", neighborNode, newDistance);
+          pq.enqueue(neighborNode, newDistance);
         }
       }
     }
