@@ -104,23 +104,39 @@
 //   });
 // }
 
-function twoArrays(k, A, B) {
-  // Write your code here
-  A.sort((a, b) => {
-    if (a > b) return 1;
-    else return -1;
-  });
-  console.log("--a", A);
-  B.sort((a, b) => {
-    if (a > b) return -1;
-    else return 1;
-  });
-  console.log("--aB", B);
+// function twoArrays(k, A, B) {
+//   // Write your code here
+//   A.sort((a, b) => {
+//     if (a > b) return 1;
+//     else return -1;
+//   });
+//   console.log("--a", A);
+//   B.sort((a, b) => {
+//     if (a > b) return -1;
+//     else return 1;
+//   });
+//   console.log("--aB", B);
+//
+//   for (let i = 0; i < A.length; i++) {
+//     if (A[i] + B[i] < k) return "NO";
+//   }
+//   return "YES";
+// }
 
-  for (let i = 0; i < A.length; i++) {
-    if (A[i] + B[i] < k) return "NO";
+function birthday(s, d, m) {
+  // Write your code here
+  let count = 0;
+  let sum = 0;
+
+  for (let i = 0; i < m; i++) {
+    sum += s[i];
   }
-  return "YES";
+  for (let i = 0; i < s.length - m + 1; i++) {
+    if (sum === d) count += 1;
+    sum = sum - s[i] + s[i + m];
+  }
+
+  return count;
 }
 
-console.log(twoArrays(10, [1, 32, 10], [45, 6, 8]));
+console.log(birthday([2, 2, 1, 3, 2], 4, 2));
