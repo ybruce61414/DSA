@@ -123,20 +123,53 @@
 //   return "YES";
 // }
 
-function birthday(s, d, m) {
+// function birthday(s, d, m) {
+//   // Write your code here
+//   let count = 0;
+//   let sum = 0;
+//
+//   for (let i = 0; i < m; i++) {
+//     sum += s[i];
+//   }
+//   for (let i = 0; i < s.length - m + 1; i++) {
+//     if (sum === d) count += 1;
+//     sum = sum - s[i] + s[i + m];
+//   }
+//
+//   return count;
+// }
+
+// function sockMerchant(n, ar) {
+//   // Write your code here
+//   const freqCounter = {};
+//   let count = 0;
+//   for (let i of ar) {
+//     freqCounter[i] = freqCounter[i] ? freqCounter[i] + 1 : 1;
+//   }
+//   for (let i in freqCounter) {
+//     count = count + Math.floor(freqCounter[i] / 2);
+//   }
+//
+//   return count;
+// }
+// console.log(sockMerchant(9, [10, 20, 20, 10, 10, 30, 50, 10, 20]));
+
+function pageCount(n, p) {
   // Write your code here
-  let count = 0;
-  let sum = 0;
 
-  for (let i = 0; i < m; i++) {
-    sum += s[i];
-  }
-  for (let i = 0; i < s.length - m + 1; i++) {
-    if (sum === d) count += 1;
-    sum = sum - s[i] + s[i + m];
+  const front = Math.ceil((p - 1) / 2);
+  let back;
+
+  if (n - p > 1) {
+    back = Math.ceil((n - p - 1) / 2);
+  } else if (n - p === 1) {
+    back = n % 2 === 0 ? 1 : 0;
+  } else {
+    back = 0;
   }
 
-  return count;
+  console.log(front, back);
+  return front < back ? front : back;
 }
 
-console.log(birthday([2, 2, 1, 3, 2], 4, 2));
+console.log(pageCount(6, 2));
