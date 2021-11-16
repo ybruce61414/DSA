@@ -6,7 +6,6 @@ function partition(arr, start, end) {
     if (arr[i] < pivotValue) {
       // Swapping elements
       [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
-      // Moving to next element
       pivotIndex++;
     }
   }
@@ -16,4 +15,62 @@ function partition(arr, start, end) {
   return pivotIndex;
 }
 
-console.log(partition([7, -2, 4, 1, 6, 5, 0, -4, 2], 0, 8));
+function quickSort1(arr, start, end) {
+  // Base case or terminating case
+  if (start >= end) {
+    return;
+  }
+
+  let index = partition(arr, start, end);
+
+  quickSort1(arr, start, index - 1);
+  quickSort1(arr, index + 1, end);
+}
+
+function quickSort2(Arr) {
+  if (Arr.length <= 1) {
+    return Arr;
+  }
+
+  const pivot = Arr[Arr.length - 1];
+  const leftArr = [];
+  const rightArr = [];
+
+  for (let i = 0; i < Arr.length - 1; i++) {
+    if (Arr[i] < pivot) {
+      leftArr.push(Arr[i]);
+    } else {
+      rightArr.push(Arr[i]);
+    }
+  }
+
+  return [...quickSort2(leftArr), pivot, ...quickSort2(rightArr)];
+}
+
+function quickSort3(array, left, right) {
+  left = left || 0;
+  right = right || array.length - 1;
+
+  let pivot = partition(array, left, right);
+
+  if (left < pivot - 1) {
+    quickSort3(array, left, pivot - 1);
+  }
+
+  if (right > pivot + 1) {
+    quickSort3(array, pivot, right);
+  }
+
+  return array;
+}
+
+const array1 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
+const array2 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
+const array3 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
+
+quickSort1(array1, 0, array1.length - 1);
+let re2 = quickSort2(array2);
+
+console.log("1----", array1);
+console.log("2----", re2);
+console.log("3----", quickSort3(array3));
