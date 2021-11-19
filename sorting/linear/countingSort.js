@@ -19,7 +19,8 @@ function countingSort(arr) {
     if (i - 1 >= 0) countArr[i] = countArr[i - 1] + countArr[i];
   }
 
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = arr.length - 1; i > -1; i--) {
+    //  need to loop backward to make it stable
     let value = arr[i];
     let index = countArr[value] - 1;
     outputArr[index] = value;
@@ -30,5 +31,7 @@ function countingSort(arr) {
 }
 
 //  positive integer
-console.log(countingSort([1, 3, 4, 4, 5, 6, 3, 7, 8]));
-console.log(countingSort([11, 40, 40, 50, 43, 10, 20, 6, 19, 23, 27]));
+// console.log(countingSort([1, 3, 4, 4, 5, 6, 3, 7, 8]));
+// console.log(countingSort([11, 40, 40, 50, 43, 10, 20, 6, 19, 23, 27]));
+
+module.exports = { findMax, countingSort };
