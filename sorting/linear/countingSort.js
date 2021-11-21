@@ -31,7 +31,5 @@ function countingSort(arr) {
 }
 
 //  positive integer
-// console.log(countingSort([1, 3, 4, 4, 5, 6, 3, 7, 8]));
-// console.log(countingSort([11, 40, 40, 50, 43, 10, 20, 6, 19, 23, 27]));
-
-module.exports = { findMax, countingSort };
+console.log(countingSort([1, 3, 4, 4, 5, 6, 3, 7, 8]));
+console.log(countingSort([11, 40, 40, 50, 43, 10, 20, 6, 19, 23, 27]));

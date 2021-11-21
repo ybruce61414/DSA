@@ -1,8 +1,37 @@
-const { findMax, countingSort } = require("./countingSort");
+// now only valid for positive integer
+const getDigit = (num, index) => {
+  console.log(Math.pow(10, index));
+  return Math.floor(num / Math.pow(10, index)) % 10;
+};
+
+const digitCount = (num) => {
+  if (num === 0) return 1;
+  return Math.floor(Math.log10(num)) + 1;
+};
+
+const mostDigit = (arr) => {
+  let maxDigit = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (digitCount(arr[i]) > maxDigit) maxDigit = digitCount(arr[i]);
+  }
+  return maxDigit;
+};
 
 function radixSort(arr) {
-  let max = findMax(arr);
-  return max;
+  let maxDigitCount = mostDigit(arr);
+
+  for (let i = 0; i < maxDigitCount; i++) {
+    let digitBuckets = Array.from({ length: 10 }, () => []);
+    for (let j = 0; j < arr.length; j++) {
+      let digit = getDigit(arr[j], i);
+      digitBuckets[digit].push(arr[j]);
+    }
+    arr = [].concat(...digitBuckets);
+  }
+  return arr;
 }
 
-console.log(radixSort([181, 289, 390]));
+console.log(radixSort([23, 345, 5467, 12, 2345, 98, 52]));
+// console.log(getDigit(624, 2));
+// console.log(digitCount(55624));
+// console.log(mostDigit([23, 345, 5467, 12, 22345, 98, 52]));
