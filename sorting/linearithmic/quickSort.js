@@ -64,21 +64,18 @@ function quickSort2(Arr) {
   return [...quickSort2(leftArr), pivot, ...quickSort2(rightArr)];
 }
 
-function quickSort3(array, left, right) {
+function quickSort3(arr, left, right) {
   left = left || 0;
-  right = right || array.length - 1;
+  right = right || arr.length - 1;
 
-  let pivot = partition2(array, left, right);
+  if (right > left) {
+    let pivot = partition2(arr, left, right);
 
-  if (left < pivot - 1) {
-    quickSort3(array, left, pivot - 1);
+    quickSort3(arr, left, pivot - 1);
+    quickSort3(arr, pivot + 1, right);
   }
 
-  if (right > pivot + 1) {
-    quickSort3(array, pivot + 1, right);
-  }
-
-  return array;
+  return arr;
 }
 
 const array1 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
@@ -86,11 +83,4 @@ const array2 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
 const array3 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
 const array4 = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
 
-// quickSort1(array4, 0, array4.length - 1);
-// console.log("-1----", array4);
-// console.log("-1----", quickSort3(array4));
-
-// console.log("---oar2", partition2(array4, 0, array4.length - 1));
-// console.log("---oar2", array4);
-// console.log("1----", partitionFirst(array4, 0, array4.length - 1));
-// console.log("1----", partitionFirst([1, 6, 5, 0, -4, 2], 0, 5));
+console.log(quickSort3(array4));
