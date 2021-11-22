@@ -1,6 +1,5 @@
 // now only valid for positive integer
 const getDigit = (num, index) => {
-  console.log(Math.pow(10, index));
   return Math.floor(num / Math.pow(10, index)) % 10;
 };
 
@@ -31,7 +30,4 @@ function radixSort(arr) {
   return arr;
 }
 
-console.log(radixSort([23, 345, 5467, 12, 2345, 98, 52]));
-// console.log(getDigit(624, 2));
-// console.log(digitCount(55624));
-// console.log(mostDigit([23, 345, 5467, 12, 22345, 98, 52]));
+console.log(radixSort([23, 345, 5467, 12, 2345, 0, 98, 52]));
