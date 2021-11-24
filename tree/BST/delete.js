@@ -1,44 +1,12 @@
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-  }
-}
+const { BinarySearchTree: Parent } = require("./insert");
 
-class BinarySearchTree {
+class BinarySearchTree extends Parent {
   constructor() {
-    this.root = null;
-  }
-
-  insert(value) {
-    let newNode = new Node(value);
-    if (!this.root) {
-      this.root = newNode;
-      return this;
-    }
-
-    let curr = this.root;
-    while (true) {
-      if (value < curr.value) {
-        if (curr.left === null) {
-          curr.left = newNode;
-          return this;
-        }
-        curr = curr.left;
-      } else if (value > curr.value) {
-        if (curr.right === null) {
-          curr.right = newNode;
-          return this;
-        }
-        curr = curr.right;
-      } else return undefined;
-    }
+    super();
   }
 
   _findMax(node) {
     let curr = node;
-
     while (curr.right) curr = curr.right;
     return curr;
   }
@@ -47,30 +15,27 @@ class BinarySearchTree {
     if (node === null) return undefined;
 
     if (node.value > value) {
-      console.log("> value------", node, value);
-
       node.left = this.delete(node.left, value);
+      return node;
     } else if (node.value < value) {
-      console.log("< value-------", node, value);
       node.right = this.delete(node.right, value);
-      console.log("<secret -------", node);
+      return node;
     } else {
       //  found element
       if (node.left && node.right) {
         //  replace predecessor to curr node
         let temp = this._findMax(node.left);
         node.value = temp.value;
-        console.log("found 2 child--", node);
         node.left = this.delete(node.left, node.value);
-
-        console.log("after found 2 child--", node);
+      } else if (!node.left && !node.right) {
+        //  leaf node
+        node = null;
       } else {
-        //  one child or leaf node
-        console.log("found one or no!!", node);
+        //  one child
         if (node.left === null) node = node.right;
         if (node.right === null) node = node.left;
       }
-      console.log("return  !!", node);
+
       return node;
     }
   }
