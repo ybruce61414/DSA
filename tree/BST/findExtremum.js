@@ -1,39 +1,8 @@
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-  }
-}
+const { BinarySearchTree: Parent } = require("./insert");
 
-class BinarySearchTree {
+class BinarySearchTree extends Parent {
   constructor() {
-    this.root = null;
-  }
-
-  insert(value) {
-    let newNode = new Node(value);
-    if (!this.root) {
-      this.root = newNode;
-      return this;
-    }
-
-    let curr = this.root;
-    while (true) {
-      if (value < curr.value) {
-        if (curr.left === null) {
-          curr.left = newNode;
-          return this;
-        }
-        curr = curr.left;
-      } else if (value > curr.value) {
-        if (curr.right === null) {
-          curr.right = newNode;
-          return this;
-        }
-        curr = curr.right;
-      } else return undefined;
-    }
+    super();
   }
 
   findMin(node) {

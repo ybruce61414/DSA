@@ -57,7 +57,7 @@ bst.insert(7);
 bst.insert(6);
 
 bst.delete(bst.root, 8);
-console.log("---0", bst);
-console.log("---1", bst.root.right);
-console.log("---2", bst.root.right.left);
-console.log("---3", bst.root.right?.left?.right);
+console.log("--level 0--", bst);
+console.log("--level 1--", bst.root.right);
+console.log("--level 2--", bst.root.right.left);
+console.log("--level 3--", bst.root.right?.left?.right);

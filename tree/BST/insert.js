@@ -51,7 +51,3 @@ module.exports = { BinarySearchTree };
 // bst.insert(2);
 // bst.insert(16);
 // bst.insert(7);
-//
-// console.log(bst.root);
-// console.log(bst.root.left);
-// console.log(bst.root.right);
