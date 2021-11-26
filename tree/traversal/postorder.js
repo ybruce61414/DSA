@@ -18,19 +18,27 @@ class BinarySearchTree extends Parent {
   }
 
   postorderIter() {
-    const stack = [];
+    //  using one stack
+    const stack = [this.root];
     const data = [];
-    let curr = this.root;
 
-    while (curr || stack.length > 0) {
-      if (curr) {
-        stack.push(curr.value);
-        curr = curr.left;
-      } else {
-        const popEle = stack.pop();
-        data.push(popEle.value);
+    while (stack.length > 0) {
+      let top = stack[stack.length - 1];
+      if (!top.left && !top.right) {
+        data.push(stack.pop().value);
+      }
+
+      if (top.right) {
+        stack.push(top.right);
+        top.right = null;
+      }
+
+      if (top.left) {
+        stack.push(top.left);
+        top.left = null;
       }
     }
+    return data;
   }
 }
 
@@ -49,4 +57,4 @@ bst.insert(8);
 bst.insert(20);
 
 console.log(bst.postorderRecur());
-// console.log(bst.postorderIter());
+console.log(bst.postorderIter());
