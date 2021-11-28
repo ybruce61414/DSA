@@ -12,6 +12,7 @@ class BinarySearchTree {
   }
 
   insert(value) {
+    //  Iteratively
     let newNode = new Node(value);
     if (!this.root) {
       this.root = newNode;
@@ -35,6 +36,32 @@ class BinarySearchTree {
       } else return undefined;
     }
   }
+
+  insertRecur(value) {
+    //  Recursively
+    let newNode = new Node(value);
+    if (!this.root) {
+      this.root = newNode;
+    } else {
+      this._insertHelper(this.root, newNode);
+    }
+  }
+
+  _insertHelper(node, newNode) {
+    if (newNode.value > node.value) {
+      if (node.right === null) {
+        node.right = newNode;
+      } else {
+        this._insertHelper(node.right, newNode);
+      }
+    } else if (newNode.value < node.value) {
+      if (node.left === null) {
+        node.left = newNode;
+      } else {
+        this._insertHelper(node.left, newNode);
+      }
+    } else return undefined;
+  }
 }
 
 //      10
@@ -51,3 +78,15 @@ module.exports = { BinarySearchTree };
 // bst.insert(2);
 // bst.insert(16);
 // bst.insert(7);
+
+// bst.insertRecur(10);
+// bst.insertRecur(5);
+// bst.insertRecur(13);
+// bst.insertRecur(11);
+// bst.insertRecur(2);
+// bst.insertRecur(16);
+// bst.insertRecur(7);
+//
+// console.log(bst.root);
+// console.log(bst.root.left);
+// console.log(bst.root.right);
