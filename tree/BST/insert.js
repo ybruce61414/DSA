@@ -40,27 +40,28 @@ class BinarySearchTree {
   insertRecur(value) {
     //  Recursively
     let newNode = new Node(value);
+
+    const insertHelper = (node, newNode) => {
+      if (newNode.value > node.value) {
+        if (node.right === null) {
+          node.right = newNode;
+        } else {
+          insertHelper(node.right, newNode);
+        }
+      } else if (newNode.value < node.value) {
+        if (node.left === null) {
+          node.left = newNode;
+        } else {
+          insertHelper(node.left, newNode);
+        }
+      } else return undefined;
+    };
+
     if (!this.root) {
       this.root = newNode;
     } else {
-      this._insertHelper(this.root, newNode);
+      insertHelper(this.root, newNode);
     }
-  }
-
-  _insertHelper(node, newNode) {
-    if (newNode.value > node.value) {
-      if (node.right === null) {
-        node.right = newNode;
-      } else {
-        this._insertHelper(node.right, newNode);
-      }
-    } else if (newNode.value < node.value) {
-      if (node.left === null) {
-        node.left = newNode;
-      } else {
-        this._insertHelper(node.left, newNode);
-      }
-    } else return undefined;
   }
 }
 

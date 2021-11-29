@@ -13,35 +13,71 @@ class AVLTree {
   }
 
   insert(value) {
-    this.insertHelper(this.root, null, value);
+    this.root = this.insertHelper(this.root, null, value);
   }
 
-  singleRotateLeft(node) {}
+  balanceFactor(node) {
+    return this.height(node.left) - this.height(node.right);
+  }
 
-  singleRotateLeft(node) {}
+  rightRotation(node) {
+    const temp = node.left;
+    node.left = temp.right;
+    temp.right = node;
+    return temp;
+  }
 
-  LR(node) {}
+  leftRotation(node) {
+    const temp = node.right;
+    node.right = temp.left;
+    temp.left = node;
+    return temp;
+  }
 
-  RL(node) {}
+  LR(node) {
+    node.left = this.leftRotation(node.left);
+    node = this.rightRotation(node);
+    return node;
+  }
 
-  singleRotateRight() {}
+  RL(node) {
+    node.right = this.rightRotation(node.right);
+    node = this.leftRotation(node);
+    return node;
+  }
 
-  insertHelper(node, nodeParent, value) {
-    if (node === null) {
+  insertHelper(node, parent, value) {
+    if (!node) {
       node = new Node(value);
-      node.left = node.right = null;
+      if (!parent) this.root = node;
     } else if (value < node.value) {
       node.left = this.insertHelper(node.left, node, value);
-      if (this.height(node.left) - this.height(node.right) > 1) {
+      if (this.balanceFactor(node) > 1) {
         if (value < node.left.value) {
-          node = this.singleRotateRight(node);
+          node = this.rightRotation(node);
         } else {
           node = this.LR(node);
         }
       }
     } else if (value > node.value) {
-      //  to-do
+      node.right = this.insertHelper(node.right, node, value);
+      if (this.balanceFactor(node) < -1) {
+        if (value > node.right.value) {
+          node = this.leftRotation(node);
+        } else {
+          node = this.RL(node);
+        }
+      }
     }
     return node;
   }
 }
+
+let bst = new AVLTree();
+
+bst.insert(50);
+bst.insert(20);
+bst.insert(15);
+bst.insert(40);
+
+console.log(bst.root);
