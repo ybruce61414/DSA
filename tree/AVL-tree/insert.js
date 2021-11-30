@@ -12,10 +12,6 @@ class AVLTree {
     return Math.max(this.height(node.left), this.height(node.right)) + 1;
   }
 
-  insert(value) {
-    this.root = this.insertHelper(this.root, null, value);
-  }
-
   balanceFactor(node) {
     return this.height(node.left) - this.height(node.right);
   }
@@ -46,38 +42,48 @@ class AVLTree {
     return node;
   }
 
-  insertHelper(node, parent, value) {
-    if (!node) {
-      node = new Node(value);
-      if (!parent) this.root = node;
-    } else if (value < node.value) {
-      node.left = this.insertHelper(node.left, node, value);
-      if (this.balanceFactor(node) > 1) {
-        if (value < node.left.value) {
-          node = this.rightRotation(node);
-        } else {
-          node = this.LR(node);
-        }
+  balance(node) {
+    if (!node) return node;
+    const nodeBF = this.balanceFactor(node);
+
+    if (nodeBF > 1) {
+      if (this.balanceFactor(node.left) < 0) {
+        node.left = this.leftRotation(node.left);
       }
-    } else if (value > node.value) {
-      node.right = this.insertHelper(node.right, node, value);
-      if (this.balanceFactor(node) < -1) {
-        if (value > node.right.value) {
-          node = this.leftRotation(node);
-        } else {
-          node = this.RL(node);
-        }
+      node = this.rightRotation(node);
+    } else if (nodeBF < -1) {
+      if (this.balanceFactor(node.right) > 0) {
+        node.right = this.rightRotation(node.right);
       }
+      node = this.leftRotation(node);
     }
     return node;
   }
+
+  insert(value) {
+    const insertHelper = (node, parent, value) => {
+      if (!node) {
+        node = new Node(value);
+        if (!parent) this.root = node;
+      } else if (value < node.value) {
+        node.left = insertHelper(node.left, node, value);
+      } else if (value > node.value) {
+        node.right = insertHelper(node.right, node, value);
+      }
+      return this.balance(node);
+    };
+
+    this.root = insertHelper(this.root, null, value);
+  }
 }
 
-let bst = new AVLTree();
+module.exports = { AVLTree };
 
-bst.insert(50);
-bst.insert(20);
-bst.insert(15);
-bst.insert(40);
-
-console.log(bst.root);
+// let bst = new AVLTree();
+//
+// bst.insert(50);
+// bst.insert(20);
+// bst.insert(15);
+// bst.insert(40);
+//
+// console.log(bst.root);
