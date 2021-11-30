@@ -12,29 +12,29 @@ class AVLTree extends Parent {
   }
 
   delete(value) {
-    const deleteHelper = (currNode, value) => {
-      if (currNode === null) return undefined;
+    const deleteHelper = (node, value) => {
+      if (node === null) return undefined;
 
-      if (currNode.value > value) {
-        currNode.left = deleteHelper(currNode.left, value);
-      } else if (currNode.value < value) {
-        currNode.right = deleteHelper(currNode.right, value);
+      if (node.value > value) {
+        node.left = deleteHelper(node.left, value);
+      } else if (node.value < value) {
+        node.right = deleteHelper(node.right, value);
       } else {
-        if (currNode.left && currNode.right) {
+        if (node.left && node.right) {
           //  replace predecessor to curr node
-          let temp = this._findMax(currNode.left);
-          currNode.value = temp.value;
-          currNode.left = deleteHelper(currNode.left, currNode.value);
-        } else if (!currNode.left && !currNode.right) {
+          let temp = this._findMax(node.left);
+          node.value = temp.value;
+          node.left = deleteHelper(node.left, node.value);
+        } else if (!node.left && !node.right) {
           //  leaf node
-          currNode = null;
+          node = null;
         } else {
           //  one child
-          if (!currNode.left) currNode = currNode.right;
-          if (!currNode.right) currNode = currNode.left;
+          if (!node.left) node = node.right;
+          if (!node.right) node = node.left;
         }
       }
-      return this.balance(currNode);
+      return this.balance(node);
     };
     this.root = deleteHelper(this.root, value);
   }
