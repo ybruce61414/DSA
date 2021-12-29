@@ -2,7 +2,7 @@ function swap(arr, idx1, idx2) {
   [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
 }
 
-function partition1(arr, start, end) {
+function partitionPivotEnd(arr, start, end) {
   // Taking the last element as the pivot
   const pivotValue = arr[end];
   let pivotIndex = start;
@@ -17,7 +17,7 @@ function partition1(arr, start, end) {
   return pivotIndex;
 }
 
-function partition2(arr, start, end) {
+function partitionPivotStart(arr, start, end) {
   let pivot = arr[start];
   let swapIndex = start;
 
@@ -32,19 +32,33 @@ function partition2(arr, start, end) {
   return swapIndex;
 }
 
-function quickSort1(arr, start, end) {
+function quickSortRecur1(arr, start, end) {
   // Base case or terminating case
-  if (start >= end) {
-    return;
+  if (start < end) {
+    let index = partitionPivotStart(arr, start, end);
+
+    quickSortRecur1(arr, start, index - 1);
+    quickSortRecur1(arr, index + 1, end);
   }
 
-  let index = partition2(arr, start, end);
-
-  quickSort1(arr, start, index - 1);
-  quickSort1(arr, index + 1, end);
+  return arr;
 }
 
-function quickSort2(Arr) {
+function quickSortRecur2(arr, left, right) {
+  left = left || 0;
+  right = right || arr.length - 1;
+
+  if (right > left) {
+    let pivot = partitionPivotStart(arr, left, right);
+
+    quickSortRecur2(arr, left, pivot - 1);
+    quickSortRecur2(arr, pivot + 1, right);
+  }
+
+  return arr;
+}
+
+function quickSortExtraSpace(Arr) {
   if (Arr.length <= 1) {
     return Arr;
   }
@@ -61,21 +75,11 @@ function quickSort2(Arr) {
     }
   }
 
-  return [...quickSort2(leftArr), pivot, ...quickSort2(rightArr)];
-}
-
-function quickSort3(arr, left, right) {
-  left = left || 0;
-  right = right || arr.length - 1;
-
-  if (right > left) {
-    let pivot = partition2(arr, left, right);
-
-    quickSort3(arr, left, pivot - 1);
-    quickSort3(arr, pivot + 1, right);
-  }
-
-  return arr;
+  return [
+    ...quickSortExtraSpace(leftArr),
+    pivot,
+    ...quickSortExtraSpace(rightArr),
+  ];
 }
 
 const array1 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
@@ -83,4 +87,5 @@ const array2 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
 const array3 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
 const array4 = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
 
-console.log(quickSort3(array4));
+console.log(quickSortRecur1(array4, 0, array4.length - 1));
+console.log(quickSortExtraSpace(array4));
