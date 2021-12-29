@@ -44,15 +44,15 @@ function quickSortRecur1(arr, start, end) {
   return arr;
 }
 
-function quickSortRecur2(arr, left, right) {
-  left = left || 0;
-  right = right || arr.length - 1;
+function quickSortRecur2(arr, start, end) {
+  start = start === undefined ? 0 : start;
+  end = end === undefined ? arr.length - 1 : end;
 
-  if (right > left) {
-    let pivot = partitionPivotStart(arr, left, right);
+  if (start < end) {
+    let pivot = partitionPivotStart(arr, start, end);
 
-    quickSortRecur2(arr, left, pivot - 1);
-    quickSortRecur2(arr, pivot + 1, right);
+    quickSortRecur2(arr, start, pivot - 1);
+    quickSortRecur2(arr, pivot + 1, end);
   }
 
   return arr;
@@ -86,6 +86,9 @@ const array1 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
 const array2 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
 const array3 = [7, -2, 4, 1, 6, 5, 0, -4, 2];
 const array4 = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
+const arr = [2, 2, 2, 3, 7, 4];
 
 console.log(quickSortRecur1(array4, 0, array4.length - 1));
 console.log(quickSortExtraSpace(array4));
+console.log(quickSortRecur1(arr, 0, arr.length - 1));
+console.log(quickSortRecur2(arr));
