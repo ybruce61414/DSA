@@ -23,6 +23,11 @@ class MaxBinaryHeap {
     return max;
   }
 
+  peek() {
+    //  see the max one without modified it
+    return this.values[0];
+  }
+
   heapify(arr) {
     if (!Array.isArray(arr)) return;
     let lastParentIndex = Math.floor((arr.length - 2) / 2);
