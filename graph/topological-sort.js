@@ -53,6 +53,38 @@ class Graph {
     }
     return stack;
   }
+
+  topologicalSortKahn() {
+    const indegrees = Array.from({ length: this.vertices }, () => 0);
+    const queue = [];
+    let res = [];
+
+    //init indegree
+    for (let v = 0; v < this.vertices; v++) {
+      let neighbors = this.adjacencyList[v];
+      for (let neighbor of neighbors) {
+        indegrees[neighbor] += 1;
+      }
+    }
+
+    //init queue
+    for (let v = 0; v < this.vertices; v++) {
+      if (indegrees[v] === 0) queue.push(v);
+    }
+
+    while (queue.length > 0) {
+      let dequeue = queue.shift();
+      res.push(dequeue);
+
+      //update indegree
+      for (let neighbor of this.adjacencyList[dequeue]) {
+        indegrees[neighbor] -= 1;
+        if (indegrees[neighbor] === 0) queue.push(neighbor);
+      }
+    }
+
+    return res.length === this.vertices ? res : "cycle";
+  }
 }
 
 // Driver Code
@@ -63,7 +95,7 @@ g.addEdge(4, 0);
 g.addEdge(4, 1);
 g.addEdge(2, 3);
 g.addEdge(3, 1);
+// g.addEdge(1, 2);
 
-console.log(g.show());
-
-console.log(g.topologicalSortDFS());
+// console.log(g.show());
+console.log(g.topologicalSortKahn());
